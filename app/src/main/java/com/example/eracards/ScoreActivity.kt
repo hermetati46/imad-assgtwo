@@ -2,12 +2,18 @@ package com.example.eracards
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import android.content.Intent
 import android.widget.Button
 import android.widget.TextView
 import kotlin.system.exitProcess
 
 class ScoreActivity : AppCompatActivity() {
+
+    // Define a TAG for logging
+    companion object {
+        private const val TAG = "ScoreActivity"
+    }
 
     // Data passed from QuestionActivity (for review)
     private lateinit var questions: Array<String>
@@ -16,12 +22,14 @@ class ScoreActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_score)
+        Log.d(TAG, "onCreate: Activity created.")
 
         // --- Get UI Elements ---
         val scoreTextView: TextView = findViewById(R.id.scoreTextView)
         val scoreFeedbackTextView: TextView = findViewById(R.id.scoreFeedbackTextView)
         val reviewButton: Button = findViewById(R.id.reviewButton)
         val finishButton: Button = findViewById(R.id.finishButton)
+        Log.d(TAG, "UI elements initialized.")
 
         // --- Retrieve data from Intent ---
         val score = intent.getIntExtra("EXTRA_SCORE", 0)

@@ -2,18 +2,26 @@ package com.example.eracards
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import android.widget.Button
 import android.widget.TextView
 
 class ReviewActivity : AppCompatActivity() {
 
+    // Define a TAG for logging
+    companion object {
+        private const val TAG = "ReviewActivity" // Tag for logging
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review)
+        Log.d(TAG, "onCreate: Activity created.")
 
         // --- Get UI Elements ---
         val reviewContentTextView: TextView = findViewById(R.id.reviewContentTextView)
         val backButton: Button = findViewById(R.id.backButton)
+        Log.d(TAG, "UI elements initialized.")
 
         // --- Retrieve data from Intent ---
         val questions = intent.getStringArrayExtra("EXTRA_QUESTIONS") ?: arrayOf()

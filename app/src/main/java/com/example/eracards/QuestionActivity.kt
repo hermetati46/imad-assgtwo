@@ -2,25 +2,29 @@ package com.example.eracards
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import android.util.Log
 import android.content.Intent
 import android.widget.ProgressBar
 import android.widget.Button
 import android.widget.TextView
-import androidx.core.content.ContextCompat // Needed for getting colors
+import androidx.core.content.ContextCompat
 
 class QuestionActivity : AppCompatActivity() {
 
-    // --- UI Elements ---
-    // Removido: private lateinit var questionNumberTextView: TextView
-    private lateinit var questionProgressBar: ProgressBar // Adicionado ProgressBar
-    private lateinit var progressTextView: TextView     // Adicionado TextView para "X/Y"
+    // Define a TAG for logging
+    companion object {
+        private const val TAG = "QuestionActivity" // Tag for logging
+    }
+
+    private lateinit var questionProgressBar: ProgressBar
+    private lateinit var progressTextView: TextView
     private lateinit var questionTextView: TextView
     private lateinit var trueButton: Button
     private lateinit var falseButton: Button
     private lateinit var feedbackTextView: TextView
     private lateinit var nextButton: Button
 
-    // --- Quiz Data ---
+
     private val questions = arrayOf(
         "Nelson Mandela became president of South Africa in 1994.",
         "The Great Wall of China is visible from the Moon with the naked eye.",
@@ -30,7 +34,7 @@ class QuestionActivity : AppCompatActivity() {
     )
     private val answers = booleanArrayOf(true, false, true, true, false)
 
-    // --- Quiz State ---
+
     private var currentQuestionIndex = 0
     private var score = 0
     private var answerGiven = false
@@ -38,29 +42,37 @@ class QuestionActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_question)
+        Log.d(TAG, "onCreate: Activity created.")
 
-        // --- Initialize UI Elements ---
-        questionProgressBar = findViewById(R.id.questionProgressBar) // Referência para ProgressBar
-        progressTextView = findViewById(R.id.progressTextView)       // Referência para TextView "X/Y"
+
+        questionProgressBar = findViewById(R.id.questionProgressBar)
+        progressTextView = findViewById(R.id.progressTextView)
         questionTextView = findViewById(R.id.questionTextView)
         trueButton = findViewById(R.id.trueButton)
         falseButton = findViewById(R.id.falseButton)
         feedbackTextView = findViewById(R.id.feedbackTextView)
         nextButton = findViewById(R.id.nextButton)
+        Log.d(TAG, "UI elements initialized.")
 
-        // --- Configure a barra de progresso inicial ---
+
         questionProgressBar.max = questions.size // Define o valor máximo da barra
 
-        // --- Load the first question ---
+
         loadQuestion()
 
-        // --- Set Button Click Listeners ---
-        trueButton.setOnClickListener { checkAnswer(true) }
-        falseButton.setOnClickListener { checkAnswer(false) }
-        nextButton.setOnClickListener { moveToNextQuestion() }
+
+        trueButton.setOnClickListener {
+            Log.i(TAG, "True button clicked.")
+            checkAnswer(true) }
+        falseButton.setOnClickListener {
+            Log.i(TAG, "False button clicked.")
+            checkAnswer(false) }
+        nextButton.setOnClickListener {
+            Log.i(TAG, "Next button clicked.")
+            moveToNextQuestion() }
     }
 
-    // --- Function to load the current question ---
+
     private fun loadQuestion() {
         if (currentQuestionIndex < questions.size) {
             val questionNumber = currentQuestionIndex + 1
@@ -79,6 +91,7 @@ class QuestionActivity : AppCompatActivity() {
             nextButton.isEnabled = false
             answerGiven = false
         } else {
+            Log.i(TAG, "Quiz finished. Navigating to Score screen.")
             goToScoreScreen()
         }
     }
@@ -112,6 +125,7 @@ class QuestionActivity : AppCompatActivity() {
 
     // --- Function to navigate to the Score Activity ---
     private fun goToScoreScreen() {
+        Log.d(TAG, "goToScoreScreen called.")
         val intent = Intent(this, ScoreActivity::class.java)
         intent.putExtra("EXTRA_SCORE", score)
         intent.putExtra("EXTRA_TOTAL_QUESTIONS", questions.size)
