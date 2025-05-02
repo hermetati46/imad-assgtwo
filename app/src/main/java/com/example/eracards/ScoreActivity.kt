@@ -24,14 +24,14 @@ class ScoreActivity : AppCompatActivity() {
         setContentView(R.layout.activity_score)
         Log.d(TAG, "onCreate: Activity created.")
 
-        // --- Get UI Elements ---
+        // Get UI Elements
         val scoreTextView: TextView = findViewById(R.id.scoreTextView)
         val scoreFeedbackTextView: TextView = findViewById(R.id.scoreFeedbackTextView)
         val reviewButton: Button = findViewById(R.id.reviewButton)
         val finishButton: Button = findViewById(R.id.finishButton)
         Log.d(TAG, "UI elements initialized.")
 
-        // --- Retrieve data from Intent ---
+        // Retrieve data from Intent
         val score = intent.getIntExtra("EXTRA_SCORE", 0)
         val totalQuestions = intent.getIntExtra("EXTRA_TOTAL_QUESTIONS", 5)
         // Retrieve arrays for review - handle potential null case though unlikely here
@@ -39,10 +39,10 @@ class ScoreActivity : AppCompatActivity() {
         answers = intent.getBooleanArrayExtra("EXTRA_ANSWERS") ?: booleanArrayOf()
 
 
-        // --- Display Score ---
+        // Display Score
         scoreTextView.text = "Your Score: $score / $totalQuestions"
 
-        // --- Display Feedback based on score ---
+        // Display Feedback based on score
         val feedback = when {
             score >= 3 -> "Great job! You know your history."
             score > 0 -> "Keep practising! You'll get there."
@@ -50,7 +50,7 @@ class ScoreActivity : AppCompatActivity() {
         }
         scoreFeedbackTextView.text = feedback
 
-        // --- Set Button Click Listeners ---
+        // Set Button Click Listeners
         reviewButton.setOnClickListener {
             // Start ReviewActivity, passing the questions and answers
             val reviewIntent = Intent(this, ReviewActivity::class.java)
@@ -59,7 +59,7 @@ class ScoreActivity : AppCompatActivity() {
             startActivity(reviewIntent)
         }
 
-        //Terminate the application completely
+        // Terminate the application completely
         finishButton.setOnClickListener {
             finishAffinity()
             exitProcess(0)

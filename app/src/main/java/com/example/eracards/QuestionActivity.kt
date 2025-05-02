@@ -16,6 +16,7 @@ class QuestionActivity : AppCompatActivity() {
         private const val TAG = "QuestionActivity" // Tag for logging
     }
 
+    // UI Elements
     private lateinit var questionProgressBar: ProgressBar
     private lateinit var progressTextView: TextView
     private lateinit var questionTextView: TextView
@@ -44,7 +45,7 @@ class QuestionActivity : AppCompatActivity() {
         setContentView(R.layout.activity_question)
         Log.d(TAG, "onCreate: Activity created.")
 
-
+        // Initialize UI Elements
         questionProgressBar = findViewById(R.id.questionProgressBar)
         progressTextView = findViewById(R.id.progressTextView)
         questionTextView = findViewById(R.id.questionTextView)
@@ -57,10 +58,10 @@ class QuestionActivity : AppCompatActivity() {
 
         questionProgressBar.max = questions.size // Define o valor máximo da barra
 
-
+        // Load the first question UI
         loadQuestion()
 
-
+        // Set Button Click Listeners
         trueButton.setOnClickListener {
             Log.i(TAG, "True button clicked.")
             checkAnswer(true) }
@@ -72,16 +73,16 @@ class QuestionActivity : AppCompatActivity() {
             moveToNextQuestion() }
     }
 
-
+    // Function to update UI based on current QuizLogic state
     private fun loadQuestion() {
         if (currentQuestionIndex < questions.size) {
             val questionNumber = currentQuestionIndex + 1
 
-            // --- Atualiza a Barra de Progresso e o Texto ---
+            // Update Progress Bar and Text
             questionProgressBar.progress = questionNumber // Define o progresso atual
             progressTextView.text = "$questionNumber/${questions.size}" // Atualiza o texto "X/Y"
 
-            // --- Exibe a questão ---
+            // Display the question
             questionTextView.text = questions[currentQuestionIndex]
 
             // Reset for the new question
@@ -96,7 +97,7 @@ class QuestionActivity : AppCompatActivity() {
         }
     }
 
-    // --- Function to check the user's answer ---
+    // Function to check the user's answer
     private fun checkAnswer(userAnswer: Boolean) {
         if (answerGiven) return
 
@@ -107,6 +108,7 @@ class QuestionActivity : AppCompatActivity() {
 
         val correctAnswer = answers[currentQuestionIndex]
 
+        // Update Feedback UI
         if (userAnswer == correctAnswer) {
             score++
             feedbackTextView.text = "Correct!"
@@ -117,13 +119,13 @@ class QuestionActivity : AppCompatActivity() {
         }
     }
 
-    // --- Function to move to the next question ---
+    // Function to move to the next question
     private fun moveToNextQuestion() {
         currentQuestionIndex++
         loadQuestion()
     }
 
-    // --- Function to navigate to the Score Activity ---
+    // Function to navigate to the Score Activity
     private fun goToScoreScreen() {
         Log.d(TAG, "goToScoreScreen called.")
         val intent = Intent(this, ScoreActivity::class.java)

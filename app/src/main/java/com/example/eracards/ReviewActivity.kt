@@ -18,28 +18,34 @@ class ReviewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_review)
         Log.d(TAG, "onCreate: Activity created.")
 
-        // --- Get UI Elements ---
+        // Get UI Elements
         val reviewContentTextView: TextView = findViewById(R.id.reviewContentTextView)
         val backButton: Button = findViewById(R.id.backButton)
         Log.d(TAG, "UI elements initialized.")
 
-        // --- Retrieve data from Intent ---
+        // Retrieve data from Intent
         val questions = intent.getStringArrayExtra("EXTRA_QUESTIONS") ?: arrayOf()
         val answers = intent.getBooleanArrayExtra("EXTRA_ANSWERS") ?: booleanArrayOf()
 
-        // --- Build the review text ---
+        // Build the review text
         val reviewText = StringBuilder()
         for (i in questions.indices) {
             reviewText.append("Q${i + 1}: ${questions[i]}\n")
             reviewText.append("Correct Answer: ${answers[i]}\n\n")
         }
 
-        // --- Display the review content ---
+        // Display the review content
         reviewContentTextView.text = reviewText.toString()
 
-        // --- Set Button Click Listener ---
+        // Set Button Click Listener
         backButton.setOnClickListener {
+            Log.i(TAG, "Back button clicked.")
             finish() // Close this activity and return to ScoreActivity
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(TAG, "onDestroy: Activity destroyed.")
     }
 }
