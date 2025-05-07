@@ -25,7 +25,7 @@ class QuestionActivity : AppCompatActivity() {
     private lateinit var feedbackTextView: TextView
     private lateinit var nextButton: Button
 
-
+    //First parallel array: Contains the question strings
     private val questions = arrayOf(
         "Nelson Mandela became president of South Africa in 1994.",
         "The Great Wall of China is visible from the Moon with the naked eye.",
@@ -33,9 +33,11 @@ class QuestionActivity : AppCompatActivity() {
         "Cleopatra VII was of Greek descent, not Egyptian.",
         "World War I ended in 1917."
     )
+
+    //Second parallel array: Contains the boolean answers corresponding to each question
     private val answers = booleanArrayOf(true, false, true, true, false)
 
-
+    //Quiz State
     private var currentQuestionIndex = 0
     private var score = 0
     private var answerGiven = false
